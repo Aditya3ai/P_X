@@ -8,7 +8,12 @@
 <body>
     <div class="invitation">
         <h1>🌸 {{ data.groom }} & {{ data.bride }} 🌸</h1>
-        <img src="{{ url_for('static', filename='images/' + data.cover_image) }}" alt="Cover Image" width="300">
+        {% if data.cover_image_path %}
+    <img src="{{ url_for('static', filename='images/' + data.cover_image_path) }}" alt="Cover Image" width="300">
+{% else %}
+    <p><em>No cover image uploaded.</em></p>
+{% endif %}
+
         <h2>📅 {{ data.wedding_date }}, {{ data.city }}</h2>
         {% if data.story %}
             <h3>💖 Our Story 💖</h3>
