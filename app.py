@@ -1,7 +1,11 @@
 from flask import Flask, render_template, request, redirect, url_for
 import os
+from dotenv import load_dotenv
 import psycopg2
 from psycopg2.extras import DictCursor
+
+# Load environment variables from .env file
+load_dotenv()
 
 app = Flask(__name__)
 
@@ -10,12 +14,12 @@ UPLOAD_FOLDER = 'static/images'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-# AWS RDS PostgreSQL configuration
-DB_NAME = 'postgres'  # use the correct database name from pgAdmin
-DB_USER = 'postgres'
-DB_PASSWORD = 'RamuAditya3504?'
-DB_HOST = 'weddingapp-db.c7weyeywihqd.eu-west-1.rds.amazonaws.com'
-DB_PORT = '5432'
+# AWS RDS PostgreSQL configuration from environment variables
+DB_NAME = os.getenv('DB_NAME')
+DB_USER = os.getenv('DB_USER')
+DB_PASSWORD = os.getenv('DB_PASSWORD')
+DB_HOST = os.getenv('DB_HOST')
+DB_PORT = os.getenv('DB_PORT', '5432')
 
 # Database connection function
 def get_connection():
